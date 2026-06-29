@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auf Wiedersehen, Maria!</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2333;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #f0c230;
+    --accent2: #c9a020;
+    --subject1: #79c0ff;
+    --subject2: #a5d6ff;
+    --circuit: #1f2d1f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  /* Circuit board background */
+  .circuit-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.18;
+  }
+
+  header {
+    position: relative;
+    z-index: 1;
+    padding: 3rem 1.5rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .dept-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .dept-badge svg { width: 14px; height: 14px; }
+  h1 {
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  h1 span { color: var(--accent); font-weight: 600; }
+  .subtitle {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .subject-badges {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid;
+  }
+  .badge-deutsch {
+    background: rgba(121, 192, 255, 0.08);
+    border-color: rgba(121, 192, 255, 0.3);
+    color: var(--subject1);
+  }
+  .badge-religion {
+    background: rgba(165, 214, 255, 0.08);
+    border-color: rgba(165, 214, 255, 0.3);
+    color: var(--subject2);
+  }
+
+  /* Carousel */
+  .carousel-section {
+    position: relative;
+    z-index: 1;
+    padding: 2.5rem 1.5rem;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .carousel-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem 2rem 1.5rem;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .carousel-card::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    font-size: 100px;
+    color: var(--accent);
+    opacity: 0.12;
+    font-family: Georgia, serif;
+    line-height: 1;
+  }
+  .carousel-text {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--text);
+    position: relative;
+    z-index: 1;
+    transition: opacity 0.4s;
+  }
+  .carousel-author {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .author-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .author-name {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
+  .carousel-dots {
+    display: flex;
+    gap: 6px;
+  }
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background 0.3s, width 0.3s;
+  }
+  .dot.active {
+    background: var(--accent);
+    width: 18px;
+    border-radius: 3px;
+  }
+  .carousel-btns {
+    display: flex;
+    gap: 8px;
+  }
+  .ctrl-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .ctrl-btn:hover { border-color: var(--accent); background: rgba(240, 194, 48, 0.08); }
+
+  .progress-bar {
+    height: 2px;
+    background: var(--border);
+    border-radius: 1px;
+    margin-top: 0.75rem;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 1px;
+    transition: width 0.1s linear;
+  }
+
+  /* All messages */
+  .all-section {
+    position: relative;
+    z-index: 1;
+    padding: 0 1.5rem 3rem;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .message-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 12px;
+    border-left: 3px solid var(--accent);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .message-card .msg-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+  .message-card .msg-author {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+  }
+  footer span { color: var(--accent); }
+
+  .fade { opacity: 0; }
+</style>
+</head>
+<body>
+
+<svg class="circuit-bg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <line x1="0" y1="100" x2="800" y2="100" stroke="#f0c230" stroke-width="1"/>
+  <line x1="0" y1="300" x2="800" y2="300" stroke="#f0c230" stroke-width="1"/>
+  <line x1="0" y1="500" x2="800" y2="500" stroke="#f0c230" stroke-width="1"/>
+  <line x1="150" y1="0" x2="150" y2="600" stroke="#f0c230" stroke-width="1"/>
+  <line x1="400" y1="0" x2="400" y2="600" stroke="#f0c230" stroke-width="1"/>
+  <line x1="650" y1="0" x2="650" y2="600" stroke="#f0c230" stroke-width="1"/>
+  <circle cx="150" cy="100" r="5" fill="#f0c230"/>
+  <circle cx="400" cy="100" r="5" fill="#f0c230"/>
+  <circle cx="650" cy="100" r="5" fill="#f0c230"/>
+  <circle cx="150" cy="300" r="5" fill="#f0c230"/>
+  <circle cx="400" cy="300" r="5" fill="#f0c230"/>
+  <circle cx="650" cy="300" r="5" fill="#f0c230"/>
+  <circle cx="150" cy="500" r="5" fill="#f0c230"/>
+  <circle cx="400" cy="500" r="5" fill="#f0c230"/>
+  <circle cx="650" cy="500" r="5" fill="#f0c230"/>
+  <line x1="150" y1="100" x2="220" y2="100" stroke="#f0c230" stroke-width="2"/>
+  <line x1="220" y1="100" x2="220" y2="160" stroke="#f0c230" stroke-width="2"/>
+  <line x1="400" y1="300" x2="470" y2="300" stroke="#f0c230" stroke-width="2"/>
+  <line x1="470" y1="300" x2="470" y2="240" stroke="#f0c230" stroke-width="2"/>
+  <circle cx="220" cy="160" r="3" fill="#f0c230"/>
+  <circle cx="470" cy="240" r="3" fill="#f0c230"/>
+  <rect x="90" y="88" width="24" height="24" rx="3" fill="none" stroke="#f0c230" stroke-width="1"/>
+  <rect x="340" y="288" width="24" height="24" rx="3" fill="none" stroke="#f0c230" stroke-width="1"/>
+  <rect x="590" y="488" width="24" height="24" rx="3" fill="none" stroke="#f0c230" stroke-width="1"/>
+</svg>
+
+<header>
+  <div class="dept-badge">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+    </svg>
+    Elektroabteilung · RvWBK
+  </div>
+  <h1>Auf Wiedersehen, <span>Maria</span></h1>
+  <p class="subtitle">Danke für alles – wir wünschen dir einen wunderschönen Neustart</p>
+  <div class="subject-badges">
+    <span class="badge badge-deutsch">📖 Deutsch</span>
+    <span class="badge badge-religion">✝️ Religion</span>
+  </div>
+</header>
+
+<main>
+  <div class="carousel-section">
+    <div class="section-label">Glückwünsche</div>
+    <div class="carousel-card">
+      <p class="carousel-text" id="carousel-text">Lade...</p>
+      <div class="carousel-author">
+        <div class="author-avatar" id="carousel-avatar">?</div>
+        <span class="author-name" id="carousel-author"></span>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="carousel-controls">
+      <div class="carousel-dots" id="dots"></div>
+      <div class="carousel-btns">
+        <button class="ctrl-btn" id="btn-prev" title="Zurück">‹</button>
+        <button class="ctrl-btn" id="btn-next" title="Weiter">›</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="all-section">
+    <div class="section-label">Alle Nachrichten</div>
+    <div id="all-messages"></div>
+  </div>
+</main>
+
+<footer>
+  Mit ❤️ von der <span>Elektroabteilung</span> · RvWBK Paderborn
+</footer>
+
+<script>
+const messages = [
+  {
+    "name": "Christina Hohlweck",
+    "message": "Liebe Maria, leider haben wir in diesem Schuljahr weniger Kontakt gehabt. Ich habe die Zeit mit dir sehr genossen, wir haben schöne Gespräche geführt, auch tiefgründigere, die mir in Erinnerung bleiben werden. Danke auch für deine kollegiale Zusammenarbeit. Ich wünsche dir und deiner Familie alles erdenklich Gute. Bleibt gesund!"
+  },
+  {
+    "name": "deine Zwillingsschwägerin (Anna)",
+    "message": "Liebe Zwillingsschwägerin,\nWer hätte gedacht, dass wir an der gleichen Schule landen – und uns trotzdem kaum über den Weg laufen? Irgendwie typisch für uns. Und doch weiß ich: Ich habe mitgefiebert, wenn du ungerecht behandelt wurdest. Ich habe innerlich gekämpft, wenn du gekämpft hast.\nDen Kassenwart – ja, das tut mir leid. Wirklich. Hätte ich geahnt, was damit alles einhergeht, hätte ich einfach geschwiegen. Versprochen.\nWas mich bis zum letzten Tag immer wieder zum Lachen gebracht hat? Dass unsere Kollegen uns einfach nicht auseinanderhalten konnten. Nach all den Jahren. Einfach unglaublich.\nIch werde dich so sehr vermissen. Aber ich freue mich für dich – von ganzem Herzen. Du gehst an einen Ort, wo du die Lehrerin sein kannst, zu der du ausgebildet wurdest. Wo du dich endlich entfalten kannst. Ein Neuanfang ist nicht immer leicht, aber ich weiß, dass er bei dir großartig sein wird.\nUnd auch wenn unsere Familie mit den Augen rollt – ich freue mich jetzt schon auf den Moment, wenn du fröhlich von deinen neuen Kollegen und Schülern berichten wirst.\nAlles Liebe, auf eine neue Ära – und auf uns."
+  },
+  {
+    "name": "Fabian Gohlke",
+    "message": "Liebe Maria. Wir sind uns zwar nicht oft über den Weg gelaufen, dennoch hast Du Deinen warmherzigen und freundlichen Geist in den gemeinsamen Klassen hinterlassen. Alles erdenklich Gute Dir. Privat und dienstlich."
+  },
+  {
+    "name": "Klaus Braunger",
+    "message": "Liebe Maria als Religionskollegen hatten wir viele interessante Gespräche auch zu deiner Dissertation. Ich denke, gerne an die Begegnungen mit Dir zurück. Danke auch für den Tipp damals zum Internetmobbing der Maurer. Ich habe dich stets als hilfsbereites und freundliches Wesen erlebt. Du wirst hier fehlen. Ich wünsche Dir das Beste an deiner \"Heimatschule\". Du wirst den Unterschied schnell feststellen. Alles Gute Klaus."
+  },
+  {
+    "name": "Alex",
+    "message": "Liebe Maria,\n\nich wollte mich bei dir für unsere gute Zusammenarbeit bedanken. Du hast die Deutschrefs. wirklich toll betreut und ich hätte gerne länger mit dir in der Lehrerausbildung zusammengearbeitet. Ich werde die langen Sprachnachrichten, die gemeinsamen Lehrproben und die Gespräche vermissen. Du bist eine klasse Lehrerin, eine tolle Kollegin und ein sehr liebevoller Mensch.\n\nBleib wie du bist!\nEs hat mir sehr sehr viel Spaß gemacht.\n\nLiebe Grüße\n\nAlex"
+  },
+  {
+    "name": "Annika Fortmeier",
+    "message": "Liebe Maria, ich wünsche dir von Herzen alles Liebe für deine Zukunft!"
+  },
+  {
+    "name": "Matthias Thull",
+    "message": "Liebe Maria, mit deiner freundlichen Art und deiner Bereitschaft, Dich auf den Deutschunterricht \"auf Distanz\" einzulassen, hast Du maßgeblich dazu beigetragen, dass die Fachinformatiker als erster Bildungsgang unserer Schule regelmäßigen Distanzunterricht erleben durften. Eine Erfahrung die noch lange nachwirken wird und auf deren Grundlage sich nun weitere Bildungsgänge auf den Weg gemacht haben.  Vielen Dank auch für die vielen Samstage, an denen du unterrichtet hast. Meinen Respekt dafür, dass du in der 7. und 8. Stunde alleine pflichtbewusst deinen Unterricht gemacht hast, während ich Dich mit einem schlechten Gewissen in den freien Nachmittag entschwunden bin. Ich wünsche Dir für Deinen weiteren Weg nur das Beste und bleib so wie Du bist!"
+  },
+  {
+    "name": "Sebastian",
+    "message": "Liebe Maria,\nich wünsche Dir auf deiner neuen Schule einen super Start, tolle Arbeitsbedingungen, ein nettes Kollegium und alles sonstige, was es für dich zu einem angenehmen Arbeitsplatz machen lässt.\nMach es gut und man sieht sich im Leben immer zweimal ;-)"
+  },
+  {
+    "name": "Thomas Hagemann",
+    "message": "Hallo Maria, \nich danke dir für deinen Einsatz im FHK - auch an Samstagen - und weiß noch gar nicht, wie die Lücke gefüllt werden soll, die du hinterlässt. \nAuch möchte ich dir für deine charmante Art und Persönlichkeit danken. Für einen Kollegen, in dem Fall mich, hattest du immer ein Lächeln und ein freundliches Wort übrig. Das weiß ich zu schätzen. (Bestimmt auch deinen neuen Kolleginnen und Kollegen.) \nAlles Gute an deiner neuen Schule wünscht \nThomas."
+  }
+];
+
+let current = 0;
+let timer;
+let progress = 0;
+const INTERVAL = 6000;
+const TICK = 60;
+
+function initials(name) {
+  return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2);
+}
+
+function renderDots() {
+  const dots = document.getElementById('dots');
+  dots.innerHTML = messages.map((_, i) =>
+    `<div class="dot${i === current ? ' active' : ''}"></div>`
+  ).join('');
+}
+
+function showSlide(idx, animated = true) {
+  current = (idx + messages.length) % messages.length;
+  const m = messages[current];
+  const txt = document.getElementById('carousel-text');
+  const auth = document.getElementById('carousel-author');
+  const av = document.getElementById('carousel-avatar');
+  if (animated) { txt.style.opacity = 0; }
+  setTimeout(() => {
+    txt.textContent = m.message;
+    auth.textContent = '— ' + m.name;
+    av.textContent = initials(m.name);
+    txt.style.opacity = 1;
+    txt.style.transition = 'opacity 0.4s';
+  }, animated ? 200 : 0);
+  renderDots();
+  resetProgress();
+}
+
+function resetProgress() {
+  progress = 0;
+  document.getElementById('progress-fill').style.width = '0%';
+  clearInterval(timer);
+  timer = setInterval(() => {
+    progress += (TICK / INTERVAL) * 100;
+    document.getElementById('progress-fill').style.width = Math.min(progress, 100) + '%';
+    if (progress >= 100) { showSlide(current + 1); }
+  }, TICK);
+}
+
+document.getElementById('btn-prev').addEventListener('click', () => showSlide(current - 1));
+document.getElementById('btn-next').addEventListener('click', () => showSlide(current + 1));
+
+// Render all messages
+const allDiv = document.getElementById('all-messages');
+messages.forEach(m => {
+  allDiv.innerHTML += `
+    <div class="message-card">
+      <p class="msg-text">${m.message}</p>
+      <span class="msg-author">— ${m.name}</span>
+    </div>`;
+});
+
+showSlide(0, false);
+</script>
+</body>
+</html>
