@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auf Wiedersehen, Lisa!</title>
+<style>
+  :root { --bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#f0c230;--subject1:#7ee787;--subject2:#a5d6ff; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+  .circuit-bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.18}
+  header{position:relative;z-index:1;padding:3rem 1.5rem 2rem;text-align:center;border-bottom:1px solid var(--border)}
+  .dept-badge{display:inline-flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:4px 14px;font-size:12px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.5rem}
+  .dept-badge svg{width:14px;height:14px}
+  h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:300;letter-spacing:-.02em;margin-bottom:.5rem}
+  h1 span{color:var(--accent);font-weight:600}
+  .subtitle{font-size:.95rem;color:var(--muted);margin-bottom:.4rem}
+  .subtitle-note{font-size:.82rem;color:var(--muted);opacity:.7;margin-bottom:1.2rem;font-style:italic}
+  .subject-badges{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+  .badge{display:inline-flex;align-items:center;gap:5px;padding:5px 14px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid}
+  .badge-en{background:rgba(126,231,135,.08);border-color:rgba(126,231,135,.3);color:var(--subject1)}
+  .badge-fr{background:rgba(165,214,255,.08);border-color:rgba(165,214,255,.3);color:var(--subject2)}
+  .carousel-section{position:relative;z-index:1;padding:2.5rem 1.5rem;max-width:680px;margin:0 auto}
+  .section-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+  .carousel-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem 2rem 1.5rem;min-height:200px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+  .carousel-card::before{content:'"';position:absolute;top:-10px;left:20px;font-size:100px;color:var(--accent);opacity:.12;font-family:Georgia,serif;line-height:1}
+  .carousel-text{font-size:1.05rem;line-height:1.75;color:var(--text);position:relative;z-index:1;transition:opacity .4s}
+  .carousel-author{margin-top:1.5rem;display:flex;align-items:center;gap:10px}
+  .author-avatar{width:32px;height:32px;border-radius:50%;background:var(--surface2);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--accent);flex-shrink:0}
+  .author-name{font-size:13px;color:var(--muted);font-style:italic}
+  .carousel-controls{display:flex;align-items:center;justify-content:space-between;margin-top:1rem}
+  .carousel-dots{display:flex;gap:6px}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .3s,width .3s}
+  .dot.active{background:var(--accent);width:18px;border-radius:3px}
+  .carousel-btns{display:flex;gap:8px}
+  .ctrl-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:border-color .2s,background .2s}
+  .ctrl-btn:hover{border-color:var(--accent);background:rgba(240,194,48,.08)}
+  .progress-bar{height:2px;background:var(--border);border-radius:1px;margin-top:.75rem;overflow:hidden}
+  .progress-fill{height:100%;background:var(--accent);border-radius:1px;transition:width .1s linear}
+  .all-section{position:relative;z-index:1;padding:0 1.5rem 3rem;max-width:680px;margin:0 auto}
+  .message-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:12px;border-left:3px solid var(--accent);border-top-left-radius:0;border-bottom-left-radius:0}
+  .message-card .msg-text{font-size:.95rem;line-height:1.7;color:var(--text);margin-bottom:.75rem}
+  .message-card .msg-author{font-size:12px;color:var(--muted)}
+  footer{position:relative;z-index:1;text-align:center;padding:1.5rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
+  footer span{color:var(--accent)}
+</style>
+</head>
+<body>
+<svg class="circuit-bg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <line x1="0" y1="100" x2="800" y2="100" stroke="#f0c230" stroke-width="1"/>
+  <line x1="0" y1="300" x2="800" y2="300" stroke="#f0c230" stroke-width="1"/>
+  <line x1="0" y1="500" x2="800" y2="500" stroke="#f0c230" stroke-width="1"/>
+  <line x1="150" y1="0" x2="150" y2="600" stroke="#f0c230" stroke-width="1"/>
+  <line x1="400" y1="0" x2="400" y2="600" stroke="#f0c230" stroke-width="1"/>
+  <line x1="650" y1="0" x2="650" y2="600" stroke="#f0c230" stroke-width="1"/>
+  <circle cx="150" cy="100" r="5" fill="#f0c230"/><circle cx="400" cy="100" r="5" fill="#f0c230"/><circle cx="650" cy="100" r="5" fill="#f0c230"/>
+  <circle cx="150" cy="300" r="5" fill="#f0c230"/><circle cx="400" cy="300" r="5" fill="#f0c230"/><circle cx="650" cy="300" r="5" fill="#f0c230"/>
+  <line x1="150" y1="300" x2="280" y2="300" stroke="#f0c230" stroke-width="2"/>
+  <line x1="280" y1="300" x2="280" y2="380" stroke="#f0c230" stroke-width="2"/>
+  <circle cx="280" cy="380" r="3" fill="#f0c230"/>
+  <rect x="90" y="88" width="24" height="24" rx="3" fill="none" stroke="#f0c230" stroke-width="1"/>
+  <rect x="340" y="288" width="24" height="24" rx="3" fill="none" stroke="#f0c230" stroke-width="1"/>
+</svg>
+<header>
+  <div class="dept-badge">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    Elektroabteilung · RvWBK
+  </div>
+  <h1>Auf Wiedersehen, <span>Lisa</span></h1>
+  <p class="subtitle">Danke für alles – wir wünschen dir einen wunderschönen Neustart</p>
+  <p class="subtitle-note">Jetzt kannst du auch Französisch unterrichten – endlich!</p>
+  <div class="subject-badges">
+    <span class="badge badge-en">🇬🇧 Englisch</span>
+    <span class="badge badge-fr">🇫🇷 Französisch</span>
+  </div>
+</header>
+<main>
+  <div class="carousel-section">
+    <div class="section-label">Glückwünsche</div>
+    <div class="carousel-card">
+      <p class="carousel-text" id="carousel-text">Lade...</p>
+      <div class="carousel-author">
+        <div class="author-avatar" id="carousel-avatar">?</div>
+        <span class="author-name" id="carousel-author"></span>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="carousel-controls">
+      <div class="carousel-dots" id="dots"></div>
+      <div class="carousel-btns">
+        <button class="ctrl-btn" id="btn-prev">‹</button>
+        <button class="ctrl-btn" id="btn-next">›</button>
+      </div>
+    </div>
+  </div>
+  <div class="all-section">
+    <div class="section-label">Alle Nachrichten</div>
+    <div id="all-messages"></div>
+  </div>
+</main>
+<footer>Mit ❤️ von der <span>Elektroabteilung</span> · RvWBK Paderborn</footer>
+<script>
+const messages = [
+  {"name":"Andreas Koch","message":"Lisa, dein Enthusiasmus für Sprachen war ansteckend – auch wenn du dein geliebtes Französisch hier nicht unterrichten konntest. Wir sind sicher, das holst du jetzt nach!"},
+  {"name":"Petra Vogel","message":"Mit dir hat die Elektroabteilung ein ganz besonderes Flair bekommen. Merci et au revoir, Lisa – auf eine großartige Zukunft!"},
+  {"name":"Stefan Lange","message":"Es war toll, dich in unserem Team zu haben. Jetzt können deine Schüler endlich auch Französisch von dir lernen – viel Erfolg!"}
+];
+let current=0,timer,progress=0;
+const INTERVAL=6000,TICK=60;
+function initials(name){return name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2)}
+function renderDots(){document.getElementById('dots').innerHTML=messages.map((_,i)=>`<div class="dot${i===current?' active':''}"></div>`).join('')}
+function showSlide(idx,animated=true){
+  current=(idx+messages.length)%messages.length;
+  const m=messages[current],txt=document.getElementById('carousel-text');
+  if(animated)txt.style.opacity=0;
+  setTimeout(()=>{txt.textContent=m.message;document.getElementById('carousel-author').textContent='— '+m.name;document.getElementById('carousel-avatar').textContent=initials(m.name);txt.style.opacity=1;txt.style.transition='opacity .4s'},animated?200:0);
+  renderDots();resetProgress();
+}
+function resetProgress(){
+  progress=0;document.getElementById('progress-fill').style.width='0%';clearInterval(timer);
+  timer=setInterval(()=>{progress+=(TICK/INTERVAL)*100;document.getElementById('progress-fill').style.width=Math.min(progress,100)+'%';if(progress>=100)showSlide(current+1)},TICK);
+}
+document.getElementById('btn-prev').addEventListener('click',()=>showSlide(current-1));
+document.getElementById('btn-next').addEventListener('click',()=>showSlide(current+1));
+const allDiv=document.getElementById('all-messages');
+messages.forEach(m=>{allDiv.innerHTML+=`<div class="message-card"><p class="msg-text">${m.message}</p><span class="msg-author">— ${m.name}</span></div>`});
+showSlide(0,false);
+</script>
+</body>
+</html>
