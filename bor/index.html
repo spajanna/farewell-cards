@@ -5,10 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Auf Wiedersehen, Lisa!</title>
 <style>
-  :root { --bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#f0c230;--subject1:#7ee787;--subject2:#a5d6ff; }
+  :root{--bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#f0c230;--subject1:#7ee787;--subject2:#a5d6ff}
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
   .circuit-bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.18}
+  .music-btn{position:fixed;bottom:1.5rem;right:1.5rem;z-index:100;width:48px;height:48px;border-radius:50%;background:var(--surface2);border:1px solid var(--accent);color:var(--accent);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,194,48,.2);transition:background .2s,transform .2s}
+  .music-btn:hover{background:rgba(240,194,48,.12);transform:scale(1.08)}
+  .music-btn.muted{border-color:var(--border);color:var(--muted);box-shadow:none}
   header{position:relative;z-index:1;padding:3rem 1.5rem 2rem;text-align:center;border-bottom:1px solid var(--border)}
   .dept-badge{display:inline-flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:4px 14px;font-size:12px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.5rem}
   .dept-badge svg{width:14px;height:14px}
@@ -25,7 +28,7 @@
   .section-label::after{content:'';flex:1;height:1px;background:var(--border)}
   .carousel-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem 2rem 1.5rem;min-height:200px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
   .carousel-card::before{content:'"';position:absolute;top:-10px;left:20px;font-size:100px;color:var(--accent);opacity:.12;font-family:Georgia,serif;line-height:1}
-  .carousel-text{font-size:1.05rem;line-height:1.75;color:var(--text);position:relative;z-index:1;transition:opacity .4s}
+  .carousel-text{font-size:1.05rem;line-height:1.75;position:relative;z-index:1;transition:opacity .4s}
   .carousel-author{margin-top:1.5rem;display:flex;align-items:center;gap:10px}
   .author-avatar{width:32px;height:32px;border-radius:50%;background:var(--surface2);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--accent);flex-shrink:0}
   .author-name{font-size:13px;color:var(--muted);font-style:italic}
@@ -34,34 +37,31 @@
   .dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .3s,width .3s}
   .dot.active{background:var(--accent);width:18px;border-radius:3px}
   .carousel-btns{display:flex;gap:8px}
-  .ctrl-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:border-color .2s,background .2s}
-  .ctrl-btn:hover{border-color:var(--accent);background:rgba(240,194,48,.08)}
-  .progress-bar{height:2px;background:var(--border);border-radius:1px;margin-top:.75rem;overflow:hidden}
-  .progress-fill{height:100%;background:var(--accent);border-radius:1px;transition:width .1s linear}
-  .all-section{position:relative;z-index:1;padding:0 1.5rem 3rem;max-width:680px;margin:0 auto}
+  .ctrl-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:border-color .2s}
+  .ctrl-btn:hover{border-color:var(--accent)}
+  .all-section{position:relative;z-index:1;padding:0 1.5rem 5rem;max-width:680px;margin:0 auto}
   .message-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:12px;border-left:3px solid var(--accent);border-top-left-radius:0;border-bottom-left-radius:0}
-  .message-card .msg-text{font-size:.95rem;line-height:1.7;color:var(--text);margin-bottom:.75rem}
+  .message-card .msg-text{font-size:.95rem;line-height:1.7;margin-bottom:.75rem}
   .message-card .msg-author{font-size:12px;color:var(--muted)}
   footer{position:relative;z-index:1;text-align:center;padding:1.5rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
   footer span{color:var(--accent)}
 </style>
 </head>
 <body>
+<audio id="bg-music" src="Au Revoir Cafe.mp3" loop preload="auto"></audio>
 <svg class="circuit-bg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
   <line x1="0" y1="100" x2="800" y2="100" stroke="#f0c230" stroke-width="1"/>
   <line x1="0" y1="300" x2="800" y2="300" stroke="#f0c230" stroke-width="1"/>
-  <line x1="0" y1="500" x2="800" y2="500" stroke="#f0c230" stroke-width="1"/>
   <line x1="150" y1="0" x2="150" y2="600" stroke="#f0c230" stroke-width="1"/>
   <line x1="400" y1="0" x2="400" y2="600" stroke="#f0c230" stroke-width="1"/>
   <line x1="650" y1="0" x2="650" y2="600" stroke="#f0c230" stroke-width="1"/>
-  <circle cx="150" cy="100" r="5" fill="#f0c230"/><circle cx="400" cy="100" r="5" fill="#f0c230"/><circle cx="650" cy="100" r="5" fill="#f0c230"/>
-  <circle cx="150" cy="300" r="5" fill="#f0c230"/><circle cx="400" cy="300" r="5" fill="#f0c230"/><circle cx="650" cy="300" r="5" fill="#f0c230"/>
-  <line x1="150" y1="300" x2="280" y2="300" stroke="#f0c230" stroke-width="2"/>
-  <line x1="280" y1="300" x2="280" y2="380" stroke="#f0c230" stroke-width="2"/>
-  <circle cx="280" cy="380" r="3" fill="#f0c230"/>
+  <circle cx="150" cy="100" r="5" fill="#f0c230"/><circle cx="400" cy="100" r="5" fill="#f0c230"/>
+  <circle cx="150" cy="300" r="5" fill="#f0c230"/><circle cx="400" cy="300" r="5" fill="#f0c230"/>
   <rect x="90" y="88" width="24" height="24" rx="3" fill="none" stroke="#f0c230" stroke-width="1"/>
-  <rect x="340" y="288" width="24" height="24" rx="3" fill="none" stroke="#f0c230" stroke-width="1"/>
 </svg>
+
+<button class="music-btn" id="music-btn" title="Musik an/aus">♪</button>
+
 <header>
   <div class="dept-badge">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
@@ -85,7 +85,6 @@
         <span class="author-name" id="carousel-author"></span>
       </div>
     </div>
-    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
     <div class="carousel-controls">
       <div class="carousel-dots" id="dots"></div>
       <div class="carousel-btns">
@@ -100,32 +99,112 @@
   </div>
 </main>
 <footer>Mit ❤️ von der <span>Elektroabteilung</span> · RvWBK Paderborn</footer>
+
 <script>
 const messages = [
-  {"name":"Andreas Koch","message":"Lisa, dein Enthusiasmus für Sprachen war ansteckend – auch wenn du dein geliebtes Französisch hier nicht unterrichten konntest. Wir sind sicher, das holst du jetzt nach!"},
-  {"name":"Petra Vogel","message":"Mit dir hat die Elektroabteilung ein ganz besonderes Flair bekommen. Merci et au revoir, Lisa – auf eine großartige Zukunft!"},
-  {"name":"Stefan Lange","message":"Es war toll, dich in unserem Team zu haben. Jetzt können deine Schüler endlich auch Französisch von dir lernen – viel Erfolg!"}
+  {
+    "name": "Christina H.",
+    "message": "Liebe Lisa, ich danke dir für die gute Zusammenarbeit und das unkomplizierte Miteinander in den HF-Klassen. Auch die Essen im Roadhouse behalte ich in guter Erinnerung. Für deine Zukunft wünsche ich dir nur das Beste! Bleib so, wie du bist!"
+  },
+  {
+    "name": "Fabian G.",
+    "message": "Liebe Lisa. Mit Dir zu unterrichten bedeutete immer, dass es einfach läuft. Du warst immer hilfsbereit und offen und hattest ein offenes Ohr, wenn einem selbst die Hutschnur platzte. Liebe Kollegin, man trifft sich in diesem Beruf immer mal wieder. Ich freue mich darauf und wünsche Dir privat und dienstlich alles erdenklich Gute."
+  },
+  {
+    "name": "Klaus B.",
+    "message": "Hallo liebe Lisa,\n\nAls stets emsiges Wesen mit viel Kopien und Büchern und Taschen habe ich dich wahrgenommen. Immer in Action wie man im Englischen sagt, oder sagt man eher busy. An deiner neuen Schule wird es dir leicht fallen durch dein freundliches Wesen die Herzen der Schüler zu erobern, sich an die Arbeit zu machen. Ich wünsche Dir Alles Gute und die beste Zeit. Viele liebe Grüße. Schön dich kennengelernt zu haben. Klaus."
+  },
+  {
+    "name": "Alex",
+    "message": "Liebe Lisa,\n\nich wünsche dir für deine Zukunft alles erdenklich Gute.\nAm Gymnasium Delbrück wirst du dich sehr sehr wohlfühlren.\n\nLiebe Grüße\n\nAlex"
+  },
+  {
+    "name": "Annika F.",
+    "message": "Liebe Lisa, ich wünsche dir von Herzen alles Gute am Gymnasium Delbrück! Ich werde unsere netten Gespräche im Kopierraum vermissen. Vielleicht sehen wir uns ja mal bei einem Konzert. Ich drücke dich!"
+  },
+  {
+    "name": "Matthias T.",
+    "message": "Liebe Lisa, mit deiner freundlichen und pflichtbewussten Art warst du in der Abteilung Elektrotechnik/Informatik oder auch in der Fachschule für Technik immer eine verlässliche Stütze für den Englischunterricht. Vielen Dank für Deine Bereitschaft der wochenlangen Vertretung zum Ende des letzten Schuljahres, die es ermöglicht hat, dass die Fachinformatiker überhaupt noch Englischunterricht bekommen konnten. Unvergessen bleiben mir auch die beiden pädagogischen Tage zum Thema \"Kommunikation\", offiziell haben wir viel gelernt, inoffiziell haben wir in unserem Zweiergesprächen vor allem über Urlaub und Freizeit gesprochen und dabei bewiesen, dass wir Kommunikation auch ohne Fortbildung bestens beherrschen. Ich wünsche Dir alles Gute für deinen weiteren Weg und bleib so, wie Du bist!"
+  },
+  {
+    "name": "Sebastian K.",
+    "message": "Liebe Lisa,\nich wünsche Dir auf deiner neuen Schule einen super Start, tolle Arbeitsbedingungen, ein nettes Kollegium und alles sonstige, was es für dich zu einem angenehmen Arbeitsplatz machen lässt.\nMach es gut und man sieht sich im Leben immer zweimal ;-)"
+  },
+  {
+    "name": "Simone",
+    "message": "Hallo liebe Lisa, \nschön, dass du bei uns an der Schule Englisch unterrichtet hast. \nAuch, wenn wir uns meist nur kurz im Kopierraum, Fahrradkeller oder im Lehrerzimmer getroffen haben, ich finde, du bist eine ganz wundervolle Kollegin - offen, fröhlich und unheimlich wertschätzend deinen Schüler*innen gegenüber. Bleib so, wie du bist!\nFür deine neue Schule wünsche ich dir einen guten Start, nette und fröhliche Kolleg*innen und ein gutes Arbeitsklima. \nGanz liebe Grüße\nSimone"
+  },
+  {
+    "name": "Thomas H.",
+    "message": "Hallo Lisa, \nin den letzten Jahren habe ich sehr gerne mit dir zusammengearbeitet. Nicht nur, weil du eine sehr angenehme Person bist, sondern weil du einige Eigenschaften hast, die ich für Lehrkräfte wichtig finde: \nKreativität und gleichzeitig Zuverlässigkeit hast du bei der gemeinsamen Erarbeitung von Prüfungen an den Tag gelegt. Notfalls hast du mit dem nötigen Nachdruck dafür gesorgt, dass die Ergebnisse auch wirklich fertig wurden. \nIm Rahmen von Beratungstätigkeit habe ich erfahren, dass du eine emotional engagierte Kollegin bist, der das Wohl von Schülern nicht am Arsch vorbeigeht, sondern die mitfühlen kann. Auch wenn es manchmal belastend ist, ist das für mich eine Stärke von Lehrpersonen. \nMit diesen Stärken bist du ein Gewinn für das Kollegium in Delbrück. Hoffentlich fühlst du dich dort wohl! \nAuf bald, man sieht sich! \nThomas."
+  },
+  {
+    "name": "Daniel",
+    "message": "Hey Lisa,\nes war immer eine Freude mit dir zu sprechen und mit dir zu arbeiten.\nBleib wie du bist!\nLiebe Grüße und alles Gute für deine Zukunft"
+  },
+  {
+    "name": "Jens",
+    "message": "Liebe Lisa,\nes war immer eine Freude mit dir zu arbeiten und zu reden. Wie du dich furchtlos in dein neues Themengebiet eingearbeitet und die Jungs mitgenommen hast! Immer ein offenes Ohr und nie genervt! Das muss man erstmal hinkriegen 😀\nIch wünsche dir alles Gute in deiner neuen Schule und hoffe, dass dich der Blick in eine so andere Welt wie die unsere auch etwas bereichert hat. Wird jetzt aber auch Zeit für was Richtiges 😉\nFühl dich gedrückt und bis ganz bald!\nJens"
+  },
+  {
+    "name": "Magdalena",
+    "message": "Es ist immer ein Verlust eine so liebevolle und freundliche Kollegin zu verabschieden. Ich wünsche dir viel Erfolg und alles Gute auf deinem weiteren Wege."
+  },
+  {
+    "name": "Mark",
+    "message": "Liebe Lisa, mit deiner guten Laune und deiner positiven Energie hast du die Schule und für die Schüler den Unterricht bereichert. Ich wünsche dir für die neue Schule alles erdenklich Gute und dass du mit deiner fröhlichen Art auch dort das Kollegium und die Schüler für dich gewinnen kannst.<br> Liebe Grüße"
+  },
+    {
+    "name": "Anna",
+    "message": "Liebe Lisa, als Fabian die Schule gewechselt hat, bist du einfach eingesprungen. Für meine EIT42, für ein Jahr – und hast dort Englisch unterrichtet. Du hast Unterlagen gelesen, dich thematisch in die IT eingearbeitet und deinen Unterricht optimal auf die Azubis abgestimmt. Das war alles andere als selbstverständlich – und ich möchte dir einfach Danke sagen. Ich freue mich, dass ich dich kennenlernen durfte.\nUnd jetzt wünsche ich dir an deiner neuen Schule alles, was du verdienst: ein schönes Umfeld, nette Kollegen, liebe Schülerinnen und Schüler – sozial vielleicht etwas besser erzogen als so manche Klasse bei uns – und Eltern, die dir nicht auf die Nerven gehen. Du weißt, was ich meine. 😊\nEin Neuanfang ist nicht immer leicht, gerade für ruhige, liebe Menschen. Aber ich bin mir sicher: Es wird dir gut gehen.\nAlles Gute für deinen neuen Weg, Lisa!"
+  }
 ];
-let current=0,timer,progress=0;
-const INTERVAL=6000,TICK=60;
-function initials(name){return name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2)}
-function renderDots(){document.getElementById('dots').innerHTML=messages.map((_,i)=>`<div class="dot${i===current?' active':''}"></div>`).join('')}
-function showSlide(idx,animated=true){
-  current=(idx+messages.length)%messages.length;
-  const m=messages[current],txt=document.getElementById('carousel-text');
-  if(animated)txt.style.opacity=0;
-  setTimeout(()=>{txt.textContent=m.message;document.getElementById('carousel-author').textContent='— '+m.name;document.getElementById('carousel-avatar').textContent=initials(m.name);txt.style.opacity=1;txt.style.transition='opacity .4s'},animated?200:0);
-  renderDots();resetProgress();
+
+let current = 0;
+
+function initials(n){return n.split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2)}
+function renderDots(){
+  document.getElementById('dots').innerHTML = messages.map((_,i) =>
+    `<div class="dot${i===current?' active':''}"></div>`).join('');
 }
-function resetProgress(){
-  progress=0;document.getElementById('progress-fill').style.width='0%';clearInterval(timer);
-  timer=setInterval(()=>{progress+=(TICK/INTERVAL)*100;document.getElementById('progress-fill').style.width=Math.min(progress,100)+'%';if(progress>=100)showSlide(current+1)},TICK);
+function showSlide(idx, animated=true){
+  current = (idx + messages.length) % messages.length;
+  const m = messages[current], txt = document.getElementById('carousel-text');
+  if(animated) txt.style.opacity = 0;
+  setTimeout(()=>{
+    txt.textContent = m.message;
+    document.getElementById('carousel-author').textContent = '— ' + m.name;
+    document.getElementById('carousel-avatar').textContent = initials(m.name);
+    txt.style.opacity = 1; txt.style.transition = 'opacity .4s';
+  }, animated ? 200 : 0);
+  renderDots();
 }
-document.getElementById('btn-prev').addEventListener('click',()=>showSlide(current-1));
-document.getElementById('btn-next').addEventListener('click',()=>showSlide(current+1));
-const allDiv=document.getElementById('all-messages');
-messages.forEach(m=>{allDiv.innerHTML+=`<div class="message-card"><p class="msg-text">${m.message}</p><span class="msg-author">— ${m.name}</span></div>`});
-showSlide(0,false);
+
+document.getElementById('btn-prev').addEventListener('click', ()=>showSlide(current-1));
+document.getElementById('btn-next').addEventListener('click', ()=>showSlide(current+1));
+
+const allDiv = document.getElementById('all-messages');
+messages.forEach(m=>{
+  allDiv.innerHTML += `<div class="message-card"><p class="msg-text">${m.message}</p><span class="msg-author">— ${m.name}</span></div>`;
+});
+showSlide(0, false);
+
+// Musik
+let muted = false, musicStarted = false;
+const btn = document.getElementById('music-btn');
+btn.addEventListener('click', ()=>{
+  const audio = document.getElementById('bg-music');
+  if(!musicStarted){ audio.play(); musicStarted = true; }
+  muted = !muted;
+  audio.muted = muted;
+  btn.classList.toggle('muted', muted);
+  btn.textContent = muted ? '🔇' : '♪';
+});
+document.addEventListener('click', function autoStart(){
+  document.getElementById('bg-music').play();
+  musicStarted = true;
+  document.removeEventListener('click', autoStart);
+}, {once: true});
 </script>
 </body>
 </html>

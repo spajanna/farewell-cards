@@ -9,6 +9,9 @@
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
   .circuit-bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.18}
+  .music-btn{position:fixed;bottom:1.5rem;right:1.5rem;z-index:100;width:48px;height:48px;border-radius:50%;background:var(--surface2);border:1px solid var(--accent);color:var(--accent);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,194,48,.2);transition:background .2s,transform .2s}
+  .music-btn:hover{background:rgba(240,194,48,.12);transform:scale(1.08)}
+  .music-btn.muted{border-color:var(--border);color:var(--muted);box-shadow:none}
   header{position:relative;z-index:1;padding:3rem 1.5rem 2rem;text-align:center;border-bottom:1px solid var(--border)}
   .dept-badge{display:inline-flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:4px 14px;font-size:12px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.5rem}
   .dept-badge svg{width:14px;height:14px}
@@ -24,7 +27,7 @@
   .section-label::after{content:'';flex:1;height:1px;background:var(--border)}
   .carousel-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem 2rem 1.5rem;min-height:200px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
   .carousel-card::before{content:'"';position:absolute;top:-10px;left:20px;font-size:100px;color:var(--accent);opacity:.12;font-family:Georgia,serif;line-height:1}
-  .carousel-text{font-size:1.05rem;line-height:1.75;color:var(--text);position:relative;z-index:1;transition:opacity .4s}
+  .carousel-text{font-size:1.05rem;line-height:1.75;position:relative;z-index:1;transition:opacity .4s}
   .carousel-author{margin-top:1.5rem;display:flex;align-items:center;gap:10px}
   .author-avatar{width:32px;height:32px;border-radius:50%;background:var(--surface2);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--accent);flex-shrink:0}
   .author-name{font-size:13px;color:var(--muted);font-style:italic}
@@ -33,41 +36,37 @@
   .dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .3s,width .3s}
   .dot.active{background:var(--accent);width:18px;border-radius:3px}
   .carousel-btns{display:flex;gap:8px}
-  .ctrl-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:border-color .2s,background .2s}
-  .ctrl-btn:hover{border-color:var(--accent);background:rgba(240,194,48,.08)}
-  .progress-bar{height:2px;background:var(--border);border-radius:1px;margin-top:.75rem;overflow:hidden}
-  .progress-fill{height:100%;background:var(--accent);border-radius:1px;transition:width .1s linear}
-  .all-section{position:relative;z-index:1;padding:0 1.5rem 3rem;max-width:680px;margin:0 auto}
+  .ctrl-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:border-color .2s}
+  .ctrl-btn:hover{border-color:var(--accent)}
+  .all-section{position:relative;z-index:1;padding:0 1.5rem 5rem;max-width:680px;margin:0 auto}
   .message-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:12px;border-left:3px solid var(--accent);border-top-left-radius:0;border-bottom-left-radius:0}
-  .message-card .msg-text{font-size:.95rem;line-height:1.7;color:var(--text);margin-bottom:.75rem}
+  .message-card .msg-text{font-size:.95rem;line-height:1.7;margin-bottom:.75rem}
   .message-card .msg-author{font-size:12px;color:var(--muted)}
   footer{position:relative;z-index:1;text-align:center;padding:1.5rem;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
   footer span{color:var(--accent)}
 </style>
 </head>
 <body>
+<audio id="bg-music" src="Finish Line Pulse.mp3" loop preload="auto"></audio>
 <svg class="circuit-bg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
   <line x1="0" y1="150" x2="800" y2="150" stroke="#f0c230" stroke-width="1"/>
   <line x1="0" y1="350" x2="800" y2="350" stroke="#f0c230" stroke-width="1"/>
-  <line x1="0" y1="550" x2="800" y2="550" stroke="#f0c230" stroke-width="1"/>
   <line x1="200" y1="0" x2="200" y2="600" stroke="#f0c230" stroke-width="1"/>
   <line x1="450" y1="0" x2="450" y2="600" stroke="#f0c230" stroke-width="1"/>
-  <line x1="700" y1="0" x2="700" y2="600" stroke="#f0c230" stroke-width="1"/>
-  <circle cx="200" cy="150" r="5" fill="#f0c230"/><circle cx="450" cy="150" r="5" fill="#f0c230"/><circle cx="700" cy="150" r="5" fill="#f0c230"/>
-  <circle cx="200" cy="350" r="5" fill="#f0c230"/><circle cx="450" cy="350" r="5" fill="#f0c230"/><circle cx="700" cy="350" r="5" fill="#f0c230"/>
-  <line x1="450" y1="350" x2="450" y2="450" stroke="#f0c230" stroke-width="2"/>
-  <line x1="450" y1="450" x2="560" y2="450" stroke="#f0c230" stroke-width="2"/>
-  <circle cx="560" cy="450" r="3" fill="#f0c230"/>
+  <circle cx="200" cy="150" r="5" fill="#f0c230"/><circle cx="450" cy="150" r="5" fill="#f0c230"/>
+  <circle cx="200" cy="350" r="5" fill="#f0c230"/><circle cx="450" cy="350" r="5" fill="#f0c230"/>
   <rect x="140" y="138" width="24" height="24" rx="3" fill="none" stroke="#f0c230" stroke-width="1"/>
-  <rect x="390" y="338" width="24" height="24" rx="3" fill="none" stroke="#f0c230" stroke-width="1"/>
 </svg>
+
+<button class="music-btn" id="music-btn" title="Musik an/aus">♪</button>
+
 <header>
   <div class="dept-badge">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
     Elektroabteilung · RvWBK
   </div>
   <h1>Auf Wiedersehen, <span>Lukas</span></h1>
-  <p class="subtitle">Danke für alles – wir wünschen dir einen wunderschönen Neustart</p>
+  <p class="subtitle">Danke für alles – wir wünschen dir einen wunderschönen Neustart.<br> Auf die Plätze ... fertig? - los!</p>
   <div class="subject-badges">
     <span class="badge badge-mathe">∑ Mathematik</span>
     <span class="badge badge-sport">👟 Sport</span>
@@ -83,7 +82,6 @@
         <span class="author-name" id="carousel-author"></span>
       </div>
     </div>
-    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
     <div class="carousel-controls">
       <div class="carousel-dots" id="dots"></div>
       <div class="carousel-btns">
@@ -98,32 +96,112 @@
   </div>
 </main>
 <footer>Mit ❤️ von der <span>Elektroabteilung</span> · RvWBK Paderborn</footer>
+
 <script>
 const messages = [
-  {"name":"Julia Hartmann","message":"Lukas, du hast bewiesen, dass Mathe und Sport perfekt zusammenpassen – genauso wie du perfekt in unser Team gepasst hast. Alles Gute!"},
-  {"name":"Michael Braun","message":"Ob auf dem Sportplatz oder an der Tafel – du hast immer alles gegeben. Die Elektroabteilung vermisst dich schon jetzt. Mach's gut, Lukas!"},
-  {"name":"Karin Weber","message":"Mit deiner positiven Energie hast du uns alle angesteckt. Viel Erfolg bei deiner Stammschule – und beim nächsten Marathon!"}
+  {
+    "name": "Christina H.",
+    "message": "Lieber Lukas, du bist und bleibst nach wie vor für jede weitere Skifahrt meine Nummer eins! Gerne wäre ich mit dir gemeinsam auf Klassenfahrt gefahren. Ich wünsche dir und deiner Familie für die Zukunft alles erdenklich Gute und hoffe, wir laufen uns noch über den Weg. Du bist ein toller Kollege!"
+  },
+  {
+    "name": "Fabian G.",
+    "message": "Lieber Lukas. Wir hatten dienstlich nicht viele Schnittpunkte. Aber ich habe mich sehr gut unterstützt gefühlt, wenn es um den IT-Support ging. An diesen Punkten konnte ich eine hilfsbereite und freundliche Seite wahrnehmen. Danke sehr und ich wünsche Dir dienstlich und privat alles erdenklich Gute."
+  },
+  {
+    "name": "Sabina",
+    "message": "Hallo Lukas,\ndu bist ein toller Kollege. Sowohl fachlich als auch persönlich! Nun kommt (leider) eine andere Schule dran, aber man soll ja auch teilen können ;-)\nIch wünsche dir alles Gute für deine Zukunft und nette und  kompetente Kollegen und Vorgesetzte.\nWir werden dich vermissen!"
+  },
+  {
+    "name": "Klaus B.",
+    "message": "Lieber Lukas,\nIch habe dich zuerst als sehr engagierten, strukturierten und organisierten Lehrerkollegen warhgenommen. Auch wenn wir wenig Schnittpunkte mit den Fächern hatten, haben wir das ein oder andere interessante Gespräch geführt. Hängen geblieben ist mir an der Gesprächskultur nicht ein Besserwissen, oder schon Bescheid wissen, sondern ein wikrlicher Austausch im Fragen und Suchen. Das habe ich als sehr bereichern und entspannt erlebt. Vielleicht klappt ja der Whatsapp-Kontakt weiter und es folgen solche Momente. Für dich und deine Familie wünsche ich Alles Gute und ein gutes Leben, bleib weiterhin so froh, zugewandt und offen auf Neues. Viele liebe Grüße Klaus."
+  },
+  {
+    "name": "Eileen",
+    "message": "Lieber Lukas, auch wenn wir uns nur kurz begegnet sind, konnte ich persönlich und fachlich viel von dir lernen und bin dir dafür sehr dankbar. Für deinen weiteren Weg und die neue Schule wünsche ich dir nur das Beste! \nLiebe Grüße, Eileen"
+  },
+  {
+    "name": "Alexander A.",
+    "message": "Lieber Lukas,\n\neigentlich wollte ich dir hier keine Nachricht schreiben, da ich immer noch so sehr hoffe, dass du mein Kollege am RvWBK bleibst. In den vergangen 5 Jahren haben wir gemeinsam eine Menge erlebt. Ich blicke gerne auf die unzähligen Biere, Schnäpse, Cuba Libre etc. an den diversen Schulveranstaltungen zurück. Gerne habe ich mit dir am Glas bis in die frühen Morgenstunden gezaubert. Nicht zu vergessen sind die zahlreichen Volleyballspiele. Ob Mit- oder Gegeneinander, wir haben die Spiele einfach gelebt. \nNie vergessen werde ich deine Hochzeit mit Kerstin. Es war mir eine Ehre Gast bei Euch gewesen zu sein. Wie damals schon gesagt, war das die schönste Hochzeit die ich in meinem Leben erleben durfte.\nFür uns beiden die emotionalsten Momente in den letzten 5 Jahren waren bestimmt die Geburten von Ben, Carlotta und Mia. Ich hoffe, dass die drei in Zukunft Kontakt miteinander haben und zusammen viel erleben werden. Mit dir würde ich an der Schule keinen Kollegen verlieren, sondern einen Freund!\n\nDie restlichen Worte gibt es bei einem Kaltgetränk.\n\nIch drücke dir die Daumen, dass du weiter bei UNS bleibst.\n\nBeste Grüße dein Freund\n\nAlex"
+  },
+  {
+    "name": "Annika F.",
+    "message": "Lieber Lukas, von Herzen wünsche ich dir alles Gute am Theo! Die gemeinsame Klassenleitung und die Fahrt nach Kassel waren mir ein großes Vergnügen. Und auch die Betreuung ganz besonderer Schüler, die zwar überrascht sind, dass man mit 4 Fünfen nicht versetzt wird, aber sehr glücklich über die Spitzennamen von Seiten der neuen Klassenkameraden sind. Sei am Theo bitte etwas vorsichtig und gib nicht so gefährliche Arbeitsanweisung wie \"verteilt euch schon mal in der Halle.\" Nicht dass sich die Ärmel der Schüler rot verfärben... ;)"
+  },
+  {
+    "name": "Matthias T.",
+    "message": "Lieber Lukas, ob bei der Laptopausgabe oder in der Sporthalle, Du hast immer mit vollem Einsatz angepackt und mit der Fitness-App bewiesen, dass Engagement und Kreativität keine Fachgrenzen in der Elektro- & Informationstechnik- Abteilung kennen. Ich wünsche Dir und Deiner jungen Familie alles Gute für deinen weiteren Weg und bin mir sicher, dass Du auch an deiner neuen Schule begeistern wirst!"
+  },
+  {
+    "name": "Sebastian K.",
+    "message": "Lieber Lukas,\nich habe die Wirrungen um dich herum durch die BezReg nur nebenbei mitbekommen, aber empfinde es als unglaublich Schade, dass du nun unsere Schule verlassen musst. So weit ich gehört habe besteht ja noch Hoffnung, dass du an unsere Schule zurückkehrst. Ich drücke dir beide Daumen dafür, dass das klappt. Falls nicht, wünsche ich Dir auf deiner neuen Schule einen super Start, tolle Arbeitsbedingungen, ein nettes Kollegium und alles sonstige, was es für dich zu einem angenehmen Arbeitsplatz machen lässt.\nMach es gut und man sieht sich im Leben immer zweimal ;-)"
+  },
+  {
+    "name": "Thomas H.",
+    "message": "Hallo Lukas, \ndu bist eine echte Lehrerpersönlichkeit, das vorneweg, ein Mathelehrer, der in meinem Bildungsgang fehlen wird, weil er auch erklären kann. \nViel wichtiger - als Kollege - ist mir, dass ich dich als enorm zielstrebig und diszipliniert kennengelernt habe, was eine Ausnahme für \"Junglehrer\" ist, die sich erst noch finden müssen (so wie ich seinerzeit). Hast mich echt beeindruckt. \nDazu konnte ich erleben, dass du ein ausgeprägtes Gerechtigkeitsgefühl hast. Leider warst du auf deiner Vorgriffsstelle am RvWBK manchmal der Benachteiligte. \nIch hoffe, dass du wenigstens ein paar Kollegen in guter Erinnerung behalten wirst und wünsche dir alles Gute am Theo. \nThomas."
+  },
+  {
+    "name": "Magdalena",
+    "message": "An einem anderen Ort machst du weiter,\nwarst gut gelaunt und stets heiter,\ndas wird uns hier allen fehlen,\ndennoch wirst du dich davonstehlen.\n\nDu nimmst dein kleines Herzchen und deinen Humor, uns werden sie fehlen, aber die Neuen bestimmt sehr erfreuen. Ich wünsche dir nur schöne Erfahrungen und viel Freude an deinem neuen Arbeitsplatz."
+  },
+  {
+    "name": "Niko B.",
+    "message": "Ach Lukas, jetzt heißt es also doch Abschied nehmen (hoffentlich doch nicht für so lang) und das ist wirklich bitter! ;) Ich verabschiede mich einfach, wie man es sprichwörtlich im schönen Emsdetten macht.<br> Ker, ker, ker, mit dir geht ein Kollege, der alles mit beeindruckender Detailverliebtheit angegangen ist. Ob Unterrichtsplanung, Organisation oder irgendein neues Projekt: Wenn du etwas begonnen hast, dann bitte richtig! Am besten mit Plan, Unterplan, Verlaufsplan, Alternativplan und einem kurzen Reflexionsbogen zur Planung des Plans.<br> Manchmal hatte ich das Gefühl, du würdest selbst einen lockeren Gedanken erst einmal strukturieren, laminieren und farblich markieren, bevor du ihn aussprichst. Aber genau das hat dich auch ausgemacht: Zuverlässig, gründlich und immer mit dem Anspruch, die Dinge wirklich richtig gut zu machen! Und das Ganze mit genau der richtigen Prise Humor! Also in Zukunft auch an der Eigenschaft nich dran fummeln, wenn’t löppt!<br> Besonders fehlen werden natürlich die Beachvolleyball-Momente: Voller Einsatz, viel Ehrgeiz, kurze oder längere Hassphasen und diese charmante Fähigkeit, Niederlagen nur sehr bedingt zu akzeptieren.<br> Ker, nu maol ehrlik! Du warst ein toller und sympathischer Kollege, mit dem die Zusammenarbeit immer Spaß gemacht hat. Das werde ich vermissen!<br> Neue Schule, neue Kolleginnen und Kollegen, neue Pläne, neuer Lebensabschnitt und wahrscheinlich schon bald der erste Wunsch wieder zurückzukehren. Aber wat mutt, dat mutt!<br> Denn män to! Für das Gyhmnäsijum wünsche ich dir alles Gute, starke Nerven, nette Kolleginnen und Kollegen, viel Freude! Und falls es doch nicht immer so gut läuft - einfach tief durchatmen und Alex die Schuld geben. Et is, wie et is!<br> Und wie man es in Paderborn mit maximaler Emotionalität sagen würde: Mach’s gut. War okay mit dir. Dein Freund Niko"
+  },
+  {
+    "name": "Muck",
+    "message": "Lieber Lukas, gekommen als Kollege, (hoffentlich nur vorübergehend) gegangen als Freund. Du warst mit deiner Art, deinem Einsatz und natürlich auch mit deinem Fachwissen ein Segen für diese Schule und hinterlässt hier am Kolleg eine große Lücke, von der ich hoffe, dass du sie hoffentlich in ein paar Monaten selbst wieder schließen kannst. Unabhängig davon aber hoffe ich, dass wir noch ganz viele Gelegenheiten haben, uns zu vertragen. 😉 Einmal noch!"
+  },
+  {
+    "name": "Anna J.",
+    "message": "Lieber Lukas, weißt du noch, die GIW01? Corona, ein neues Gesicht, ein neuer Mathelehrer – und ich, die dich einfach ins kalte Wasser geschubst hat. Du bist davon ausgegangen, dass wir den Unterricht zusammen weiter machen. Ich glaube, ich war noch 45 Minuten da. Aber ich hatte einfach ein gutes Gefühl – und vielleicht noch einen anderen Termin, ich habe da so eine Vermutung. Ich wusste jedenfalls schon damals: Man kann dir vertrauen.<br> Hätte ich damals aber schon gewusst, wie perfekt du deine Mathestunden ausarbeitest – oh je. Es tut mir wirklich leid. Ehrlich. Du hast das einfach so hingenommen, ohne Murren, ohne Vorwurf. Das sagt alles über dich aus.<br> Und dann die Situation im Lehrerzimmer. Du wolltest dich einbringen, etwas bewegen, nicht einfach nur 5,5 Jahre unterrichten und wieder verschwinden. Wir haben nicht lange gefackelt. Ob päd. Tag, Bildungsgangarbeit, Ausflüge oder Digi-Team – willkommen im Chaos. Und du? Du hast es einfach gemacht. Immer. Ohne große Worte – einfach da, einfach verlässlich, einfach du.<br> Jede Feier, jede Konferenz, jedes Abibootcamp, jede Klassenfahrt – du hast sie alle zu positiven Erinnerungen gemacht. Erinnerungen, die ich nicht mehr missen möchte. Sogar der Bahnhof in Kassel zaubert mir ein Lächeln ins Gesicht. Und wir wissen beide – schön ist der wirklich nicht.<br> Und Amsterdam. Weißt du noch, wie wir reihenweise Lieder gegurgelt haben? Ich war so schlecht. Wirklich so unglaublich schlecht. Ich kann noch nicht mal singen – das ist definitiv meine Schwäche! Aber auch dieser Moment bleibt mir positiv in Erinnerung. Danke dir dafür – oder auch nicht? Ich bin mir bei dieser einen Sache gerade wirklich nicht ganz sicher. 😊<br> Eure Hochzeit war wunderbar. Einer dieser Tage, an die man noch lange denkt und bei der Erinnerung einfach nur glücklich wird. Und als du mir gesagt hast, dass du Papa wirst – ich habe jede Minute mitgefiebert. Jede einzelne.<br> Fünf Jahre. So viele Momente, so viele Geschichten – ich weiß gar nicht, welcher mir am wichtigsten ist. Vielleicht ist es auch gar nicht ein einzelner Moment. Vielleicht bist du einfach einer dieser Menschen, die jeden Moment besser machen, nur weil du dabei warst.<br> Du bist mehr als ein Kollege. Du bist und bleibst mein Lieblingsfreund. Und auch wenn wir uns manchmal Tage nicht sehen, weiß ich, dass ich dir immer schreiben kann. Das bleibt. Das ändert sich nicht.<br> Und deshalb klammere ich mich an den Gedanken, dass es nur eine kurze Zugfahrt ohne dich wird – dass du aussteigst, kurz einen anderen Zug nimmst, und irgendwann wieder einsteigst. Die Reise mit dir bis hierhin war wunderschön.<br> Ich wünsche dir zum Abschied von ganzem Herzen einen guten Start am Theo – tolle Kinder, liebe Eltern, motivierte Kollegen. Ich weiß, dass es dir dort gut gehen wird. Deine Anna"  
+  }
 ];
-let current=0,timer,progress=0;
-const INTERVAL=6000,TICK=60;
-function initials(name){return name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2)}
-function renderDots(){document.getElementById('dots').innerHTML=messages.map((_,i)=>`<div class="dot${i===current?' active':''}"></div>`).join('')}
-function showSlide(idx,animated=true){
-  current=(idx+messages.length)%messages.length;
-  const m=messages[current],txt=document.getElementById('carousel-text');
-  if(animated)txt.style.opacity=0;
-  setTimeout(()=>{txt.textContent=m.message;document.getElementById('carousel-author').textContent='— '+m.name;document.getElementById('carousel-avatar').textContent=initials(m.name);txt.style.opacity=1;txt.style.transition='opacity .4s'},animated?200:0);
-  renderDots();resetProgress();
+
+let current = 0;
+
+function initials(n){return n.split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2)}
+function renderDots(){
+  document.getElementById('dots').innerHTML = messages.map((_,i) =>
+    `<div class="dot${i===current?' active':''}"></div>`).join('');
 }
-function resetProgress(){
-  progress=0;document.getElementById('progress-fill').style.width='0%';clearInterval(timer);
-  timer=setInterval(()=>{progress+=(TICK/INTERVAL)*100;document.getElementById('progress-fill').style.width=Math.min(progress,100)+'%';if(progress>=100)showSlide(current+1)},TICK);
+function showSlide(idx, animated=true){
+  current = (idx + messages.length) % messages.length;
+  const m = messages[current], txt = document.getElementById('carousel-text');
+  if(animated) txt.style.opacity = 0;
+  setTimeout(()=>{
+    txt.innerHTML = m.message;
+    document.getElementById('carousel-author').textContent = '— ' + m.name;
+    document.getElementById('carousel-avatar').textContent = initials(m.name);
+    txt.style.opacity = 1; txt.style.transition = 'opacity .4s';
+  }, animated ? 200 : 0);
+  renderDots();
 }
-document.getElementById('btn-prev').addEventListener('click',()=>showSlide(current-1));
-document.getElementById('btn-next').addEventListener('click',()=>showSlide(current+1));
-const allDiv=document.getElementById('all-messages');
-messages.forEach(m=>{allDiv.innerHTML+=`<div class="message-card"><p class="msg-text">${m.message}</p><span class="msg-author">— ${m.name}</span></div>`});
-showSlide(0,false);
+
+document.getElementById('btn-prev').addEventListener('click', ()=>showSlide(current-1));
+document.getElementById('btn-next').addEventListener('click', ()=>showSlide(current+1));
+
+const allDiv = document.getElementById('all-messages');
+messages.forEach(m=>{
+  allDiv.innerHTML += `<div class="message-card"><p class="msg-text">${m.message}</p><span class="msg-author">— ${m.name}</span></div>`;
+});
+showSlide(0, false);
+
+// Musik
+let muted = false, musicStarted = false;
+const btn = document.getElementById('music-btn');
+btn.addEventListener('click', ()=>{
+  const audio = document.getElementById('bg-music');
+  if(!musicStarted){ audio.play(); musicStarted = true; }
+  muted = !muted;
+  audio.muted = muted;
+  btn.classList.toggle('muted', muted);
+  btn.textContent = muted ? '🔇' : '♪';
+});
+document.addEventListener('click', function autoStart(){
+  document.getElementById('bg-music').play();
+  musicStarted = true;
+  document.removeEventListener('click', autoStart);
+}, {once: true});
 </script>
 </body>
 </html>
