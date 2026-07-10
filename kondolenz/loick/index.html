@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<title>In Erinnerung an Ansgar Loick</title>
+<style>
+  :root {
+    --bg: #1a1a2e;
+    --surface: #16213e;
+    --surface2: #0f3460;
+    --border: #2d3561;
+    --text: #e8e0d0;
+    --muted: #9a8f7e;
+    --accent: #c9a84c;
+    --accent2: #e8d5a3;
+    --candle: #f5a623;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Subtle cross pattern background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Candle ── */
+  .candle-section {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1.5rem 1.5rem;
+  }
+  .candle-wrap {
+    position: relative;
+    width: 60px;
+    margin-bottom: 2rem;
+  }
+  .candle-body {
+    width: 28px;
+    height: 80px;
+    background: linear-gradient(to right, #f5ecd0, #fff8e7, #e8d5a3, #f5ecd0);
+    border-radius: 3px 3px 2px 2px;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: inset -4px 0 8px rgba(0,0,0,0.15);
+  }
+  .candle-body::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 8px;
+    background: linear-gradient(to bottom, rgba(201,168,76,0.3), transparent);
+    border-radius: 0 0 2px 2px;
+  }
+  .wick {
+    width: 2px;
+    height: 12px;
+    background: #333;
+    margin: 0 auto;
+    border-radius: 1px;
+  }
+  .flame {
+    width: 16px;
+    height: 24px;
+    margin: 0 auto -2px;
+    position: relative;
+  }
+  .flame-inner {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 20px;
+    background: radial-gradient(ellipse at 50% 80%, #fff 0%, #ffe066 40%, #ffaa00 70%, transparent 100%);
+    border-radius: 50% 50% 30% 30%;
+    animation: flicker 2s ease-in-out infinite alternate;
+    filter: blur(0.5px);
+  }
+  .flame-outer {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 24px;
+    background: radial-gradient(ellipse at 50% 80%, rgba(255,180,0,0.6) 0%, rgba(255,100,0,0.3) 60%, transparent 100%);
+    border-radius: 50% 50% 30% 30%;
+    animation: flicker 2s ease-in-out infinite alternate-reverse;
+    filter: blur(1px);
+  }
+  .glow {
+    position: absolute;
+    top: -10px; left: 50%;
+    transform: translateX(-50%);
+    width: 60px; height: 60px;
+    background: radial-gradient(ellipse, rgba(245,166,35,0.25) 0%, transparent 70%);
+    animation: glow-pulse 2s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes flicker {
+    0%   { transform: translateX(-50%) scaleX(1) scaleY(1) rotate(-1deg); }
+    25%  { transform: translateX(-50%) scaleX(0.95) scaleY(1.03) rotate(1deg); }
+    50%  { transform: translateX(-50%) scaleX(1.02) scaleY(0.98) rotate(-0.5deg); }
+    75%  { transform: translateX(-50%) scaleX(0.97) scaleY(1.02) rotate(1.5deg); }
+    100% { transform: translateX(-50%) scaleX(1) scaleY(1) rotate(-1deg); }
+  }
+  @keyframes glow-pulse {
+    0%   { opacity: 0.6; transform: translateX(-50%) scale(0.9); }
+    100% { opacity: 1;   transform: translateX(-50%) scale(1.1); }
+  }
+
+  /* ── Header ── */
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .cross {
+    font-size: 1.8rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.2em;
+  }
+  .rip-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  h1 {
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    font-weight: normal;
+    color: var(--accent2);
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+  .dates {
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+  .school-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    color: var(--accent);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    letter-spacing: 0.04em;
+  }
+  .verse {
+    margin: 1.5rem auto 0;
+    max-width: 480px;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--muted);
+    font-style: italic;
+    padding: 1rem 1.5rem;
+    border-left: 2px solid var(--accent);
+    text-align: left;
+  }
+
+  /* ── Messages ── */
+  .messages-section {
+    position: relative;
+    z-index: 1;
+    padding: 2rem 1.5rem 5rem;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
+  .section-label::before,
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .message-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 14px;
+    border-left: 3px solid var(--accent);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .message-card .msg-text {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+  .message-card .msg-author {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
+
+  /* ── Music button ── */
+  .music-btn {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 100;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(201,168,76,0.15);
+    transition: background .2s;
+  }
+  .music-btn:hover { background: rgba(201,168,76,0.1); }
+  .music-btn.muted { border-color: var(--border); color: var(--muted); box-shadow: none; }
+
+  /* ── Footer ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6;
+  }
+  footer span { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<audio id="bg-music" src="musik.mp3" loop preload="auto"></audio>
+
+<div class="candle-section">
+  <div class="candle-wrap">
+    <div class="glow"></div>
+    <div class="flame">
+      <div class="flame-outer"></div>
+      <div class="flame-inner"></div>
+    </div>
+    <div class="wick"></div>
+    <div class="candle-body"></div>
+  </div>
+</div>
+
+<header>
+  <div class="cross">✝</div>
+  <div class="rip-label">In liebevoller Erinnerung</div>
+  <h1>Ansgar Loick</h1>
+  <div class="school-badge">Gymnasium St. Michael · Paderborn</div>
+  <blockquote class="verse">
+    „Ich bin die Auferstehung und das Leben.<br>
+    Wer an mich glaubt, wird leben,<br>
+    auch wenn er stirbt."<br>
+    <small style="font-size:11px; display:block; margin-top:0.5rem;">Joh 11,25</small>
+  </blockquote>
+</header>
+
+<main>
+  <div class="messages-section">
+    <div class="section-label">Gedanken & Worte des Trostes</div>
+    <div id="all-messages"></div>
+  </div>
+</main>
+
+<footer>
+  Diese Seite wird von der <span>Schulpflegschaft des Gymnasium St. Michael</span> betreut.<br>
+  Alle Nachrichten werden vor der Veröffentlichung geprüft.<br>
+  <span>Erzbistum Paderborn</span>
+</footer>
+
+<button class="music-btn" id="music-btn" title="Musik an/aus">♪</button>
+
+<script>
+const messages = [
+  {"name": "Familie Mustermann", "message": "Herr Loick war ein außergewöhnlicher Mensch und Lehrer. Er hat das Leben unserer Kinder bereichert. Unsere Gedanken sind bei Ihrer Familie."},
+  {"name": "Klasse 9b", "message": "Wir werden Sie nie vergessen. Ihre ruhige und geduldige Art hat uns sehr viel bedeutet. Ruhen Sie in Frieden."},
+  {"name": "Ein ehemaliger Schüler", "message": "Ich erinnere mich noch genau an Ihren Unterricht. Sie haben in mir eine Begeisterung geweckt, die mich bis heute begleitet. Danke für alles."}
+];
+
+const allDiv = document.getElementById('all-messages');
+messages.forEach(m => {
+  allDiv.innerHTML += `
+    <div class="message-card">
+      <p class="msg-text">${m.message}</p>
+      <span class="msg-author">— ${m.name}</span>
+    </div>`;
+});
+
+// Musik
+let muted = false, musicStarted = false;
+const btn = document.getElementById('music-btn');
+btn.addEventListener('click', () => {
+  const audio = document.getElementById('bg-music');
+  if (!musicStarted) { audio.play(); musicStarted = true; }
+  muted = !muted;
+  audio.muted = muted;
+  btn.classList.toggle('muted', muted);
+  btn.textContent = muted ? '🔇' : '♪';
+});
+document.addEventListener('click', function autoStart() {
+  document.getElementById('bg-music').play();
+  musicStarted = true;
+  document.removeEventListener('click', autoStart);
+}, { once: true });
+</script>
+</body>
+</html>
