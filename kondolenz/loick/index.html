@@ -8,15 +8,15 @@
 <title>In Erinnerung an Ansgar Loick</title>
 <style>
   :root {
-    --bg: #1a1a2e;
-    --surface: #16213e;
-    --surface2: #0f3460;
-    --border: #2d3561;
-    --text: #e8e0d0;
-    --muted: #9a8f7e;
-    --accent: #c9a84c;
-    --accent2: #e8d5a3;
-    --candle: #f5a623;
+    --bg: #e8e0d4;
+    --surface: #f7f3ee;
+    --surface-white: #ffffff;
+    --surface2: #dfd7ca;
+    --border: #cfc6b8;
+    --text: #2c2520;
+    --muted: #7a6f65;
+    --accent: #E42726;
+    --gold: #8a6f3e;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -26,252 +26,177 @@
     min-height: 100vh;
     overflow-x: hidden;
   }
+  .top-bar { height: 4px; background: var(--accent); width: 100%; }
 
-  /* Subtle cross pattern background */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* ── Candle ── */
-  .candle-section {
-    position: relative;
-    z-index: 1;
+  /* ── School header ── */
+  .school-header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 3rem 1.5rem 1.5rem;
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-white);
   }
-  .candle-wrap {
-    position: relative;
-    width: 60px;
-    margin-bottom: 2rem;
+  .school-logo { width: 140px; margin-bottom: 0.25rem; }
+
+  /* ── Candle ── */
+  .candle-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.5rem 1.5rem 1rem;
+    background: var(--bg);
   }
+  .candle-wrap { position: relative; width: 60px; margin-bottom: 1.5rem; }
   .candle-body {
-    width: 28px;
-    height: 80px;
-    background: linear-gradient(to right, #f5ecd0, #fff8e7, #e8d5a3, #f5ecd0);
+    width: 26px; height: 75px;
+    background: linear-gradient(to right, #f0e0b0, #fff8e7, #f5e8c0, #f0e0b0);
     border-radius: 3px 3px 2px 2px;
     margin: 0 auto;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.12), inset -3px 0 6px rgba(0,0,0,0.08);
     position: relative;
-    box-shadow: inset -4px 0 8px rgba(0,0,0,0.15);
   }
-  .candle-body::after {
-    content: '';
+  .candle-drip {
     position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 8px;
-    background: linear-gradient(to bottom, rgba(201,168,76,0.3), transparent);
-    border-radius: 0 0 2px 2px;
+    top: -4px; left: 8px;
+    width: 6px; height: 8px;
+    background: #fff8e7;
+    border-radius: 0 0 4px 4px;
   }
-  .wick {
-    width: 2px;
-    height: 12px;
-    background: #333;
-    margin: 0 auto;
-    border-radius: 1px;
-  }
-  .flame {
-    width: 16px;
-    height: 24px;
-    margin: 0 auto -2px;
-    position: relative;
-  }
+  .wick { width: 2px; height: 10px; background: #555; margin: 0 auto; border-radius: 1px; }
+  .flame { width: 16px; height: 26px; margin: 0 auto -2px; position: relative; }
   .flame-inner {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 10px;
-    height: 20px;
-    background: radial-gradient(ellipse at 50% 80%, #fff 0%, #ffe066 40%, #ffaa00 70%, transparent 100%);
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 10px; height: 20px;
+    background: radial-gradient(ellipse at 50% 80%, #fff 0%, #ffe066 35%, #ffaa00 65%, transparent 100%);
     border-radius: 50% 50% 30% 30%;
-    animation: flicker 2s ease-in-out infinite alternate;
-    filter: blur(0.5px);
+    animation: flicker 2.1s ease-in-out infinite alternate;
+    filter: blur(0.4px);
   }
   .flame-outer {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 16px;
-    height: 24px;
-    background: radial-gradient(ellipse at 50% 80%, rgba(255,180,0,0.6) 0%, rgba(255,100,0,0.3) 60%, transparent 100%);
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 16px; height: 26px;
+    background: radial-gradient(ellipse at 50% 80%, rgba(255,160,0,0.55) 0%, rgba(228,39,38,0.2) 60%, transparent 100%);
     border-radius: 50% 50% 30% 30%;
-    animation: flicker 2s ease-in-out infinite alternate-reverse;
+    animation: flicker 2.1s ease-in-out infinite alternate-reverse;
     filter: blur(1px);
   }
   .glow {
-    position: absolute;
-    top: -10px; left: 50%;
-    transform: translateX(-50%);
-    width: 60px; height: 60px;
-    background: radial-gradient(ellipse, rgba(245,166,35,0.25) 0%, transparent 70%);
-    animation: glow-pulse 2s ease-in-out infinite alternate;
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    width: 70px; height: 70px;
+    background: radial-gradient(ellipse, rgba(255,180,50,0.22) 0%, transparent 70%);
+    animation: glow-pulse 2.1s ease-in-out infinite alternate;
     pointer-events: none;
   }
   @keyframes flicker {
     0%   { transform: translateX(-50%) scaleX(1) scaleY(1) rotate(-1deg); }
-    25%  { transform: translateX(-50%) scaleX(0.95) scaleY(1.03) rotate(1deg); }
-    50%  { transform: translateX(-50%) scaleX(1.02) scaleY(0.98) rotate(-0.5deg); }
-    75%  { transform: translateX(-50%) scaleX(0.97) scaleY(1.02) rotate(1.5deg); }
-    100% { transform: translateX(-50%) scaleX(1) scaleY(1) rotate(-1deg); }
+    30%  { transform: translateX(-50%) scaleX(0.94) scaleY(1.04) rotate(1.2deg); }
+    60%  { transform: translateX(-50%) scaleX(1.03) scaleY(0.97) rotate(-0.5deg); }
+    100% { transform: translateX(-50%) scaleX(0.97) scaleY(1.02) rotate(1deg); }
   }
   @keyframes glow-pulse {
-    0%   { opacity: 0.6; transform: translateX(-50%) scale(0.9); }
-    100% { opacity: 1;   transform: translateX(-50%) scale(1.1); }
+    0%   { opacity: 0.5; transform: translateX(-50%) scale(0.88); }
+    100% { opacity: 0.9; transform: translateX(-50%) scale(1.1); }
   }
 
-  /* ── Header ── */
+  /* ── Header / Name ── */
   header {
-    position: relative;
-    z-index: 1;
     text-align: center;
     padding: 0 1.5rem 2rem;
-    border-bottom: 1px solid var(--border);
+    background: var(--bg);
   }
-  .cross {
-    font-size: 1.8rem;
-    color: var(--accent);
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.2em;
-  }
+  .cross { font-size: 2rem; color: var(--accent); display: block; margin-bottom: 0.75rem; line-height: 1; }
   .rip-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: var(--muted);
-    margin-bottom: 1rem;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.22em;
+    color: var(--muted); margin-bottom: 0.75rem;
+    font-family: 'Segoe UI', system-ui, sans-serif;
   }
   h1 {
-    font-size: clamp(1.6rem, 5vw, 2.4rem);
-    font-weight: normal;
-    color: var(--accent2);
-    line-height: 1.3;
-    margin-bottom: 0.5rem;
+    font-size: clamp(1.7rem, 5vw, 2.5rem);
+    font-weight: normal; color: var(--text);
+    line-height: 1.3; margin-bottom: 1.5rem; letter-spacing: 0.02em;
   }
-  .dates {
-    font-size: 0.9rem;
-    color: var(--muted);
-    font-style: italic;
-    margin-bottom: 1rem;
-  }
-  .school-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(201,168,76,0.08);
-    border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 20px;
-    padding: 4px 14px;
-    font-size: 12px;
-    color: var(--accent);
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    letter-spacing: 0.04em;
-  }
+  .divider { width: 60px; height: 1px; background: var(--accent); margin: 0 auto 1.5rem; }
   .verse {
-    margin: 1.5rem auto 0;
-    max-width: 480px;
-    font-size: 0.95rem;
-    line-height: 1.8;
-    color: var(--muted);
-    font-style: italic;
-    padding: 1rem 1.5rem;
-    border-left: 2px solid var(--accent);
-    text-align: left;
+    max-width: 420px; margin: 0 auto;
+    font-size: 0.95rem; line-height: 1.85;
+    color: var(--muted); font-style: italic; text-align: center;
+  }
+  .verse cite {
+    display: block; margin-top: 0.5rem; font-size: 11px; font-style: normal;
+    letter-spacing: 0.08em; color: var(--accent);
+    font-family: 'Segoe UI', system-ui, sans-serif;
   }
 
   /* ── Messages ── */
   .messages-section {
-    position: relative;
-    z-index: 1;
     padding: 2rem 1.5rem 5rem;
-    max-width: 680px;
-    margin: 0 auto;
+    max-width: 640px; margin: 0 auto;
+    background: var(--bg);
   }
   .section-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--accent);
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em;
+    color: var(--muted); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 12px;
     font-family: 'Segoe UI', system-ui, sans-serif;
   }
-  .section-label::before,
-  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
+  .section-label::before, .section-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
   .message-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 14px;
+    border-radius: 4px;
+    padding: 1.25rem 1.5rem 1.25rem 1.75rem;
+    margin-bottom: 12px;
     border-left: 3px solid var(--accent);
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    border-top-left-radius: 0; border-bottom-left-radius: 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
   }
   .message-card .msg-text {
-    font-size: 1rem;
-    line-height: 1.75;
-    color: var(--text);
-    margin-bottom: 0.75rem;
+    font-size: 0.97rem; line-height: 1.78;
+    color: var(--text); margin-bottom: 0.65rem;
   }
   .message-card .msg-author {
-    font-size: 12px;
-    color: var(--muted);
-    font-style: italic;
+    font-size: 12px; color: var(--muted); font-style: italic;
     font-family: 'Segoe UI', system-ui, sans-serif;
   }
 
   /* ── Music button ── */
   .music-btn {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    z-index: 100;
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    background: var(--surface);
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    font-size: 18px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 16px rgba(201,168,76,0.15);
-    transition: background .2s;
+    position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--surface-white);
+    border: 1px solid var(--border);
+    color: var(--muted); font-size: 17px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all .2s;
   }
-  .music-btn:hover { background: rgba(201,168,76,0.1); }
-  .music-btn.muted { border-color: var(--border); color: var(--muted); box-shadow: none; }
+  .music-btn.playing { border-color: var(--accent); color: var(--accent); box-shadow: 0 2px 12px rgba(228,39,38,0.18); }
+  .music-btn:hover { background: var(--surface2); }
 
   /* ── Footer ── */
   footer {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    padding: 1.5rem;
+    text-align: center; padding: 1.5rem 1rem;
     border-top: 1px solid var(--border);
-    font-size: 12px;
-    color: var(--muted);
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    line-height: 1.6;
+    background: var(--surface-white);
+    font-size: 11px; color: var(--muted);
+    font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.7;
   }
-  footer span { color: var(--accent); }
+  footer strong { color: var(--accent); font-weight: normal; }
+  .bottom-bar { height: 3px; background: var(--accent); width: 100%; }
 </style>
 </head>
 <body>
 
 <audio id="bg-music" src="musik.mp3" loop preload="auto"></audio>
+
+<div class="top-bar"></div>
+
+<div class="school-header">
+  <img src="data:image/png;base64,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" alt="St. Michael Paderborn" class="school-logo">
+</div>
 
 <div class="candle-section">
   <div class="candle-wrap">
@@ -281,43 +206,129 @@
       <div class="flame-inner"></div>
     </div>
     <div class="wick"></div>
-    <div class="candle-body"></div>
+    <div class="candle-body">
+      <div class="candle-drip"></div>
+    </div>
   </div>
 </div>
 
 <header>
-  <div class="cross">✝</div>
+  <span class="cross">✝</span>
   <div class="rip-label">In liebevoller Erinnerung</div>
   <h1>Ansgar Loick</h1>
-  <div class="school-badge">Gymnasium St. Michael · Paderborn</div>
-  <blockquote class="verse">
+  <div class="divider"></div>
+  <p class="verse">
     „Ich bin die Auferstehung und das Leben.<br>
     Wer an mich glaubt, wird leben,<br>
-    auch wenn er stirbt."<br>
-    <small style="font-size:11px; display:block; margin-top:0.5rem;">Joh 11,25</small>
-  </blockquote>
+    auch wenn er stirbt."
+    <cite>Joh 11,25</cite>
+  </p>
 </header>
 
 <main>
   <div class="messages-section">
-    <div class="section-label">Gedanken & Worte des Trostes</div>
+    <div class="section-label">Worte des Trostes</div>
     <div id="all-messages"></div>
   </div>
 </main>
 
 <footer>
-  Diese Seite wird von der <span>Schulpflegschaft des Gymnasium St. Michael</span> betreut.<br>
-  Alle Nachrichten werden vor der Veröffentlichung geprüft.<br>
-  <span>Erzbistum Paderborn</span>
+  Diese Seite wird vom <strong>Vorstand der Schulpflegschaft des Gymnasium St. Michael</strong> betreut.<br>
 </footer>
+<div class="bottom-bar"></div>
 
-<button class="music-btn" id="music-btn" title="Musik an/aus">♪</button>
+<button class="music-btn" id="music-btn" title="Musik abspielen">🔇</button>
 
 <script>
 const messages = [
-  {"name": "Familie Mustermann", "message": "Herr Loick war ein außergewöhnlicher Mensch und Lehrer. Er hat das Leben unserer Kinder bereichert. Unsere Gedanken sind bei Ihrer Familie."},
-  {"name": "Klasse 9b", "message": "Wir werden Sie nie vergessen. Ihre ruhige und geduldige Art hat uns sehr viel bedeutet. Ruhen Sie in Frieden."},
-  {"name": "Ein ehemaliger Schüler", "message": "Ich erinnere mich noch genau an Ihren Unterricht. Sie haben in mir eine Begeisterung geweckt, die mich bis heute begleitet. Danke für alles."}
+  {
+    "name": "Louisa Brökelmann, Klasse 5a, ehemalige Schülerin",
+    "message": "Herzliches Beileid und viel Kraft in dieser schweren Zeit!!"
+  },
+  {
+    "name": "Rebecca Ebbes, Q1",
+    "message": "Und immer sind da Spuren deines Lebens....\nIn aufrichtiger Anteilnahme <br>Familie Ebbes"
+  },
+  {
+    "name": "Helena Lüttig (ehemalige Schülerin)",
+    "message": "Mein aufrichtiges Beileid zum Tod von Ansgar Loick. Er war ein toller Lehrer, der uns im Mathe LK gefordert und besonders gefördert hat. Viel Kraft für die Zeit der Trauer und des Abschieds."
+  },
+  {
+    "name": "ehemalige Schülerin",
+    "message": "Vielen Dank für Ihre positive Art, es war immer sehr lustig mit Ihnen."
+  },
+  {
+    "name": "Die Kinder und Eltern der Klasse 9c des Gymnasiums St. Michael",
+    "message": "Liebe Angehörige, \n\nmit großer Betroffenheit haben wir vom Tod von Herrn Loick erfahren.\n\nSeit der 5. Klasse war er für unsere Kinder ein zuverlässiger und geschätzter Ansprechpartner in allen technischen Fragen. Mit seiner Hilfsbereitschaft, seinem Fachwissen und seiner geduldigen Art stand er den Schülerinnen und Schülern stets zur Seite. Er verstand es, Technik verständlich zu vermitteln und weckte bei vielen Kindern Interesse und Begeisterung für dieses Thema.\n\nSein Engagement, seine Verlässlichkeit und sein freundlicher Umgang werden uns in dankbarer Erinnerung bleiben. Sein Verlust hinterlässt eine große Lücke in der Schulgemeinschaft.\n\nIn dieser schweren Zeit gelten unsere aufrichtige Anteilnahme und unser tiefes Mitgefühl Ihnen, seiner Familie, seinen Freunden sowie all seinen Kolleginnen und Kollegen.\n\nWir werden ihn nicht vergessen."
+  },
+  {
+    "name": "Helena Lüttig (ehemalige Schülerin)",
+    "message": "„Alles hat seine Zeit. Es gibt eine Zeit der Freude, eine Zeit der Stille, eine Zeit des Schmerzes, der Trauer und eine Zeit der dankbaren Erinnerung.“\n\nHerr Loick war ein toller Lehrer, der uns im Mathe LK gefördert und gefordert hat.\nMein aufrichtiges Beileid zum Tod von Herrn Loick. \nIch wünsche Ihnen viel Kraft für die Zeit der Trauer und des Abschieds."
+  },
+  {
+    "name": "Annika Klose (Abijahrgang 2006, Fahrerin auf eurer Hochzeit)",
+    "message": "Liebe Sabine, lieber Mattis, ich wünsche euch sehr viel Kraft in der nächsten Zeit, so ein Verlust ist nie leicht, auch wenn der Verstand sagt, es ist Erlösung. Behaltet die schönen Zeiten mit Ansgar in Erinnerung! Ich denke immer mit Freude an meine Mathezeit zurück und werde auch nie vergessen, wie ich das Brautpaar Loick nach der Hochzeitsfeier wieder nach Hause fahren durfte. Ich werde Ansgar immer positiv und als den besten Lehrer in Erinnerung behalten."
+  },
+  {
+    "name": "Familie Masching",
+    "message": "Unsere aufrichtige Anteilnahme! Wir wünschen allen Angehörigen, Freunden und Berufskollegen viel Kraft in dieser schweren Zeit!"
+  },
+  {
+    "name": "Ehemalige Schülerin",
+    "message": "Mit großer Betroffenheit habe ich vom Tod von Herrn Loick erfahren.\n\nAuch wenn meine Schulzeit schon viele Jahre zurückliegt (Abiturjahrgang 2007), ist er mir bis heute in ganz besonderer Erinnerung geblieben. Über mehrere Jahre hinweg durfte ich bei ihm Mathematikunterricht erleben – und er war einer der wenigen Lehrer, die mich nachhaltig geprägt haben.\n\nEr hat es geschafft, Mathematik nicht nur verständlich, sondern auch mit Humor und Leichtigkeit zu vermitteln. Vor allem aber war er ein unglaublich menschlicher Lehrer – nahbar, herzlich und immer mit einem offenen Ohr.\n\nNoch heute denke ich immer wieder an ihn zurück. Umso mehr hat es mich gefreut, ihn vor einigen Jahren beim Tag der offenen Tür noch einmal zu sehen.\n\nIch bin sehr dankbar für die Zeit, die ich bei ihm lernen durfte.\n\nSeiner Familie wünsche ich in dieser schweren Zeit viel Kraft und alles Gute.\n\nIch werde Sie nicht vergessen Herr Loick, \n\nIn Dankbarkeit, Viktoria Milz"
+  },
+  {
+    "name": "Sarah Beinlich - Abiturjahrgang 2006",
+    "message": "Liebe Familie Loick,\nErst kürzlich hatten wir unser 20 jähriges Stufentreffen. Viele Geschichten und Anekdoten sind dabei lebendig geworden, auch viele Erinnerungen an Herr Loick.  Herr Loick war 2 Jahre unser Klassenlehrer. Wir hatten eine unglaublich tolle Zeit mit ihm und mir persönlich hat er seine Begeisterung für Mathe und Informatik mitgegeben. Vielleicht ist er  und seine tolle Art mit uns umzugehen auch ein Grund meiner Berufswahl gewesen.  \n\nIn dieser schwierigen Zeit wünsche ich ganz viel Kraft und Hoffnung.  Aber seien Sie sich sicher:  Die tolle Persönlichkeit wird bei vielen seiner Schülerinnen immer präsent sein. Wir sind in unseren Gedanken  bei Ihnen. <br>In tiefem Mitgefühl,  Sarah Beinlich"
+  },
+  {
+    "name": "Elisabeth",
+    "message": "Bleibt stark und gebt nie auf !"
+  },
+  {
+    "name": "Klasse G7c",
+    "message": "Liebe Familie Loick;\n\nWir wünschen Ihnen und Ihrer Familie viel Kraft und Trost in dieser schweren Zeit.\n \nHerr Loick hat unsere Kinder nicht direkt unterrichtet, aber er ist selbst einigen Eltern aus deren Schulzeit positiv in Erinnerung geblieben. \nEr wird allen, die ihn kennen lernen durften stets als inspirierender, offenherziger und technisch vorantreibender Lehrer in dankbarer Erinnerung bleiben. \n\nWir möchten Ihnen unser tief empfundenes Beileid aussprechen.\n\nDie Eltern und Schüler der Klasse G7c\n\n\nIn stillen Gedenken an Herrn Loick-\n\"Sie haben so viele Systeme zum Laufen gebracht. Leider ist Ihr eigener Prozessor viel zu früh zur Ruhe gekommen. \nRuhen Sie in Frieden!\nAuch wenn das System heruntergefahren  ist, die Erinnerung an Sie läuft im Hintergrund weiter.\""
+  },
+  {
+    "name": "Sarah Mohrdieck (ehemalige Schülerin, Abi 2003)",
+    "message": "Auch so viele Jahre nach meiner Schulzeit ist mir Herr Loick mit seinem verschmitzten Lächeln noch präsent. Ich habe geschätzt, dass er sich menschlich zeigte und uns Schülerinnen auf Augenhöhe begegnete. Seiner Familie und seinen Freunden möchte ich mein herzliches Beileid ausdrücken."
+  },
+  {
+    "name": "Karin Fernhomberg",
+    "message": "Wo Worte fehlen, das Unbeschreibliche zu beschreiben.\nWo die Augen versagen, das Unabwendbare zu sehen.\nWo die Hände das Unbegreifliche nicht fassen können, bleibt einzig die Gewissheit, dass Ansgar im Herzen weiterleben wird.\n\n\nLiebe Familie Loick,\n\nin dieser schweren Zeit bin ich in Gedanken und Gebeten bei Ihnen.\nMöge Ansgar in Frieden ruhen und möget ihr Trost und Stärke in den Erinnerungen an die gemeinsam verbrachte Zeit finden."
+  },
+  {
+    "name": "Familie Göbel, EF - Florian",
+    "message": "Liebe Frau Dziallas-Loick.\nWir sind in Gedanken bei Ihnen und Ihrer Familie. Viel Kraft und Trost für die Zeit des Abschieds.\nMit aufrichtiger Anteilnahme<br>Familie Göbel"
+  },
+  {
+    "name": "Ehemalige Schülerin",
+    "message": "Mit großer Traurigkeit habe ich von seinem Tod erfahren. Herr Loick war für mich nicht nur ein toller Mathelehrer, sondern auch ein toller Mensch. Ich erinnere mich gerne an meine Schulzeit und die Mathe Stunden mit ihm zurück, denn dank seines Humors wurden diese nie langweilig. Er wird mir immer in positiver Erinnerung bleiben und sehr fehlen.\nIch wünsche Ihrer Familie von Herzen ganz viel Kraft und Zusammenhalt für diese unglaublich schwere Zeit.<br> Mein aufrichtiges Beileid."
+  },
+  {
+    "name": "Familie Niggemeyer (Lea G6a)",
+    "message": "„Ein Lehrer hinterlässt Spuren für die Ewigkeit; man kann nie sagen, wo sein Einfluss endet.“ \n\nPsalm 31, 16: „Meine Zeit steht in deinen Händen.“<br>In Liebe Familie Niggemeyer (Lea G6a)"
+  },
+  {
+    "name": "Marina Hillary, ehem.Schülerin",
+    "message": "Ansgar Loick war ein Lehrer, wie man ihn ein Leben lang in Erinnerung halten möchte: nah dran, immer für einen da, selbst in Pausenzeiten, und selbst wenn man mit Informatik so gar nichts anfangen konnte. :) Ich hoffe aus tiefstem Herzen, dass er ein zufriedenes Leben geführt hat und dass Sie, seine Familie, ebenso auf ihre gemeinsame Zeit zurück blicken können.<br>Ich wünsche Ihnen von Herzen alles Gute für die Zukunft!"
+  },
+  {
+    "name": "Familie Schmon",
+    "message": "Liebe Familie Loick,\ntief betroffen haben wir vom Tod von Ansgar Loick erfahren. Wir möchten Ihnen unser tief empfundenes Beileid aussprechen. Wir wünschen Ihnen für die schwere Zeit der Trauer viel Kraft und Beistand.<br>In aufrichtiger Anteilnahme Familie Schmon"
+  },
+  {
+    "name": "Familie Buscher",
+    "message": "Unser herzliches Beileid.\n\nWir wünschen Ihrer Familie viel Kraft, Trost und Zusammenhalt in dieser schweren Zeit.\n\nIn stillem Gedenken – Familie Buscher"
+  },
+  {
+    "name": "Familie Niggemann - Kromat G9d",
+    "message": "Das Leben ist begrenzt, aber die Erinnerung unendlich.\nWir werden Herrn Loick in guter Erinnerung behalten als Informatik- Lehrer und als Begleiter der Roboter AG.<br>Alles Gute."
+  },
+  {
+    "name": "die Kinder und Eltern der Klasse 8a",
+    "message": "Liebe Familie Loick,\n\nwir, die Klasse 8a und Eltern, möchten Ihnen unser herzlichstes und aufrichtiges Beileid aussprechen.\n\nObwohl Herr Loick die Klasse nicht selbst unterrichtet hat, hat uns die Nachricht von seinem Tod tief getroffen. Wir erleben in den letzten Tagen im Schulgebäude hautnah, wie groß die Lücke ist, die er hinterlässt, und wie schwer diese Zeit für die gesamte Schulgemeinschaft ist. Zu sehen, wie sehr er von allen geschätzt wurde, macht uns sehr traurig.\n\n In Gedanken sind wir in diesen schweren Stunden bei Ihnen. Wir wünschen Ihnen viel Kraft und gegenseitigen Halt.<br>Mit stillem Gruß,"
+  }
 ];
 
 const allDiv = document.getElementById('all-messages');
@@ -329,22 +340,24 @@ messages.forEach(m => {
     </div>`;
 });
 
-// Musik
-let muted = false, musicStarted = false;
+let playing = false;
 const btn = document.getElementById('music-btn');
+const audio = document.getElementById('bg-music');
+
 btn.addEventListener('click', () => {
-  const audio = document.getElementById('bg-music');
-  if (!musicStarted) { audio.play(); musicStarted = true; }
-  muted = !muted;
-  audio.muted = muted;
-  btn.classList.toggle('muted', muted);
-  btn.textContent = muted ? '🔇' : '♪';
+  playing = !playing;
+  if (playing) {
+    audio.play();
+    btn.classList.add('playing');
+    btn.textContent = '♪';
+    btn.title = 'Musik stumm schalten';
+  } else {
+    audio.pause();
+    btn.classList.remove('playing');
+    btn.textContent = '🔇';
+    btn.title = 'Musik abspielen';
+  }
 });
-document.addEventListener('click', function autoStart() {
-  document.getElementById('bg-music').play();
-  musicStarted = true;
-  document.removeEventListener('click', autoStart);
-}, { once: true });
 </script>
 </body>
 </html>
